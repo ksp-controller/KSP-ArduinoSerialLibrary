@@ -7,7 +7,7 @@ static uint8_t packetChecksum(byte payload[],uint8_t length) {
   for (int i = 0; i < length; i++) verifier ^= payload[i];
   return verifier;
 };
-static uint8_t writePacket(uint8_t* payloadAddr, uint8_t length) {
+static uint8_t writeControllerPacket(uint8_t* payloadAddr, uint8_t length) {
   uint8_t verifier = length;
   Serial.write(PACKET_ACK);
   Serial.write(PACKET_VERIFIER);

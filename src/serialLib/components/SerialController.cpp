@@ -9,7 +9,7 @@ SerialController::SerialController()
   _lastControlsIsValid = false;
   _lastData = VesselData();
   //
-  Serial.begin(SERIAL_BAUDRATE);
+  Serial.begin(57600);
 }
 VesselData SerialController::getVesselData() { return _lastData; }
 void setVesselControls(VesselControls controls) {
@@ -73,6 +73,6 @@ void SerialController::_sendData() {
   if (_lastControlsIsValid) { this->_sendLastControls(); }
 }
 void SerialController::_sendLastControls() {
-  writePacket((uint8_t*)&_lastControls, sizeof(_lastControls));
+  writeControllerPacket((uint8_t*)&_lastControls, sizeof(_lastControls));
   _lastControlsIsValid = false;
 }

@@ -1,6 +1,6 @@
 #ifndef GameDefinitions_h
 #define GameDefinitions_h
-   const int SERIAL_BAUDRATE = 57600;
+   const long SERIAL_BAUDRATE = 57600;
    const int MAX_PACKET_SIZE = 255;
    const int CONTROL_GROUP_COUNT = 11;
    const byte PACKET_ACK = 0xAE;
