@@ -1,5 +1,6 @@
 #ifndef GameDefinitions_h
 #define GameDefinitions_h
+   const int SERIAL_BAUDRATE = 57600;
    const int MAX_PACKET_SIZE = 255;
    const int CONTROL_GROUP_COUNT = 11;
    const byte PACKET_ACK = 0xAE;
@@ -67,7 +68,7 @@
         // 7 = Radial Out //8 = Target //9 = Anti-Target //10 = Maneuver node
         // Last 4 bits set navball mode. (0=ignore,1=ORBIT,2=SURFACE,3=TARGET)
     };
-struct VesselControls
+    struct VesselControls
     {
          bool SAS;
          bool RCS;
@@ -89,5 +90,26 @@ struct VesselControls
          float WheelSteer;
          float Throttle;
          float WheelThrottle;
+    };
+    struct SerializedVesselControls
+    {
+        byte MainControls;                  //SAS RCS Lights Gear Brakes Precision Abort Stage
+        byte Mode;                          //0 = stage, 1 = docking, 2 = map
+        unsigned int ControlGroup;                //control groups 1-10 in 2 bytes
+        byte NavballSASMode;                //AutoPilot mode (See above for AutoPilot modes)(Ignored if the equal to zero or out of bounds (>10)) //Navball mode
+        byte AdditionalControlByte1;
+        short Pitch;                        //-1000 -> 1000
+        short Roll;                         //-1000 -> 1000
+        short Yaw;                          //-1000 -> 1000
+        short TX;                           //-1000 -> 1000
+        short TY;                           //-1000 -> 1000
+        short TZ;                           //-1000 -> 1000
+        short WheelSteer;                   //-1000 -> 1000
+        short Throttle;                     // 0 -> 1000
+        short WheelThrottle;                // 0 -> 1000
+    };
+    enum enumActionGroup : int
+    {
+        SAS, RCS, Light, Gear, Brakes, Abort
     };
 #endif
