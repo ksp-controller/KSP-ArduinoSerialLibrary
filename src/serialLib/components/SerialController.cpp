@@ -9,13 +9,13 @@ SerialController::SerialController()
   _lastControlsIsValid = false;
   _lastData = VesselData();
   //
-  Serial.begin(57600);
+  Serial.begin(SERIAL_BAUDRATE);
 }
+// Public methods
 VesselData SerialController::getVesselData() { return _lastData; }
-void setVesselControls(VesselControls controls) {
-  //TODO: CONVERSION
-  //_lastControls = controls; //SerializedVesselControls
-  //_lastControlsIsValid = true;
+void SerialController::setVesselControls(SerializedVesselControls controls) {
+  _lastControls = controls; //SerializedVesselControls
+  _lastControlsIsValid = true;
 }
 void SerialController::loop()
 {

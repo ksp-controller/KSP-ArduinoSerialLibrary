@@ -1,13 +1,18 @@
 #include <Arduino.h>
 #include "./serialLib/SerialController.h"
+#include "./Potentiometer.h"
 static SerialController *serialCom;
+static Potentiometer *throttle;
+#define PIN1 20
+#define PIN2 21
 
 void setup() {
   serialCom = new SerialController();
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  digitalWrite(6, HIGH);
-  digitalWrite(7, LOW);
+  pinMode(PIN1, OUTPUT);
+  pinMode(PIN2, OUTPUT);
+  throttle = new Potentiometer(2,0,1000);
+
+
 }
 //get the current state of main controls and custom action groups using enumeration above, e.g. ControlStatus(AGBrakes);
 byte GetControlStatus(VesselData data, byte n)
@@ -16,14 +21,18 @@ byte GetControlStatus(VesselData data, byte n)
 }
 void loop() {
   serialCom->loop();
-  if (serialCom->getVesselData().Vsurf > 1.0) {
-    digitalWrite(6, HIGH);
+  if (GetControlStatus(serialCom->getVesselData(), RCS) == 1) {
+    digitalWrite(PIN1, HIGH);
   }else {
-    digitalWrite(6, LOW);
+    digitalWrite(PIN1, LOW);
   }
   if (GetControlStatus(serialCom->getVesselData(), SAS) == 1) {
-    digitalWrite(7, HIGH);
+    digitalWrite(PIN2, HIGH);
   }else {
-    digitalWrite(7, LOW);
+    digitalWrite(PIN2, LOW);
   }
+  //
+  SerializedVesselControls *control = new SerializedVesselControls();
+  control->Throttle = throttle->getCurrentValue();
+  serialCom->setVesselControls(*control);
 }

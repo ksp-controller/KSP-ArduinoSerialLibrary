@@ -68,29 +68,6 @@
         // 7 = Radial Out //8 = Target //9 = Anti-Target //10 = Maneuver node
         // Last 4 bits set navball mode. (0=ignore,1=ORBIT,2=SURFACE,3=TARGET)
     };
-    struct VesselControls
-    {
-         bool SAS;
-         bool RCS;
-         bool Light;
-         bool Gear;
-         bool Brakes;
-         bool Abort;
-         bool Stage;
-         int Mode;
-         int SASMode;
-         int SpeedMode;
-         bool ControlGroup[];
-         float Pitch;
-         float Roll;
-         float Yaw;
-         float TX;
-         float TY;
-         float TZ;
-         float WheelSteer;
-         float Throttle;
-         float WheelThrottle;
-    };
     struct SerializedVesselControls
     {
         byte MainControls;                  //SAS RCS Lights Gear Brakes Precision Abort Stage

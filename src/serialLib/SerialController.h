@@ -10,7 +10,7 @@ class SerialController
     SerialController();
     void loop(); //should be called every arduino loop
     VesselData getVesselData();
-    void setVesselControls(VesselControls controls);
+    void setVesselControls(SerializedVesselControls controls);
   private:
     //data
     VesselData _lastData;
