@@ -6,6 +6,7 @@ SerialController::SerialController()
   //setup
   _receivedBytes = 0;
   _incomePacketSize = 0;
+  _lastSentStamp = -1;
   _lastControlsIsValid = false;
   _lastData = VesselData();
   //
@@ -70,9 +71,12 @@ void SerialController::_readIncomePacket() {
 
 
 void SerialController::_sendData() {
-  if (_lastControlsIsValid) { this->_sendLastControls(); }
+  if (_lastControlsIsValid &&
+      (_lastSentStamp + SERIAL_THREAD_FREQUENCY <= millis() || _lastSentStamp == -1)) { this->_sendLastControls(); }
 }
 void SerialController::_sendLastControls() {
-  writeControllerPacket((uint8_t*)&_lastControls, sizeof(_lastControls));
-  _lastControlsIsValid = false;
+  if (writeControllerPacket((uint8_t*)&_lastControls, sizeof(_lastControls))) {
+    _lastControlsIsValid = false;
+    _lastSentStamp = millis();  
+  }
 }

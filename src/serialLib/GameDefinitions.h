@@ -6,6 +6,7 @@
    const byte PACKET_ACK = 0xAE;
    const byte PACKET_VERIFIER = 0xEE;
    const byte PACKET_HEADER_SIZE = 3;
+   const float SERIAL_THREAD_FREQUENCY = (1000 / 60);//60 FPS
    struct VesselData
     {
          byte id;             //1
@@ -89,4 +90,9 @@
     {
         SAS, RCS, Light, Gear, Brakes, Abort
     };
+    //get the current state of main controls and custom action groups using enumeration above, e.g. ControlStatus(AGBrakes);
+    static byte GetControlStatus(VesselData data, byte n)
+    {
+      return ((data.ActionGroups >> n) & 1) == 1;
+    }
 #endif

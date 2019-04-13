@@ -12,17 +12,20 @@ class SerialController
     VesselData getVesselData();
     void setVesselControls(SerializedVesselControls controls);
   private:
-    //data
-    VesselData _lastData;
+    //Receiive handling
     SerializedVesselControls _lastControls;
     bool _lastControlsIsValid;
+    uint8_t _lastSentStamp;//
     //Income handling
+    VesselData _lastData;
     uint8_t _incomePacketSize; //expected size for packet
     uint8_t _receivedBytes; //actual received
     byte _receivedPayload[MAX_PACKET_SIZE];
+    //Income methods
     void _receivedData();
     bool _readIncomeHeader();
     void _readIncomePacket();
+    //Receive methods
     void _sendData();
     void _sendLastControls();
 };
