@@ -10,9 +10,7 @@ void setup() {
   serialCom = new SerialController();
   pinMode(PIN1, OUTPUT);
   pinMode(PIN2, OUTPUT);
-  throttle = new Potentiometer(2,0,1000);
-
-
+  throttle = new Potentiometer(A2,0,1000);
 }
 //get the current state of main controls and custom action groups using enumeration above, e.g. ControlStatus(AGBrakes);
 byte GetControlStatus(VesselData data, byte n)
@@ -31,7 +29,8 @@ void loop() {
   }else {
     digitalWrite(PIN2, LOW);
   }
-  //
+
+  throttle->loop();
   SerializedVesselControls *control = new SerializedVesselControls();
   control->Throttle = throttle->getCurrentValue();
   serialCom->setVesselControls(*control);

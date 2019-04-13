@@ -10,7 +10,8 @@ Potentiometer::Potentiometer(uint8_t pin, int min, int max)
 void Potentiometer::loop()
 {
   int readingValue = analogRead(_pin);
-  _lastValue = map(readingValue, 540, 1024, _min, _max);
+  //leap a little rest gap
+  _lastValue = max(min(map(readingValue, 40, 1020, _min, _max), _max), _min);
 }
 int Potentiometer::getCurrentValue()
 {
