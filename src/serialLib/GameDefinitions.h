@@ -88,11 +88,16 @@
     };
     enum enumActionGroup : int
     {
-        SAS, RCS, Light, Gear, Brakes, Abort
+        SAS, RCS, Light, Gear, Brakes, Abort, Stage
     };
     //get the current state of main controls and custom action groups using enumeration above, e.g. ControlStatus(AGBrakes);
     static byte GetControlStatus(VesselData data, byte n)
     {
       return ((data.ActionGroups >> n) & 1) == 1;
+    }
+    static byte SetControlStatus(SerializedVesselControls *control, byte n, bool value)
+    {
+      if (value) control->MainControls |= (uint16_t)(1UL << n);       // forces nth bit of x to be 1.  all other bits left alone.
+      else control->MainControls &= (uint16_t)~(1UL << n);
     }
 #endif
