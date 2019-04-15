@@ -6,7 +6,7 @@
    const byte PACKET_ACK = 0xAE;
    const byte PACKET_VERIFIER = 0xEE;
    const byte PACKET_HEADER_SIZE = 3;
-   const float SERIAL_THREAD_FREQUENCY = (1000 / 60);//60 FPS
+   const float SERIAL_THREAD_FREQUENCY = (1000 / 30);//60 FPS
    struct VesselData
     {
          byte id;             //1

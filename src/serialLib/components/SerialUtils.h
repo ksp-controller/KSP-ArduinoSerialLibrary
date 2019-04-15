@@ -35,5 +35,6 @@ static uint8_t sendDebugMessage(String message) {
     Serial.write(payload[i]);
   } Serial.write(verifier);
   Serial.flush();
+  free(payload);
 };
 #endif

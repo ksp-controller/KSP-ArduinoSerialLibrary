@@ -51,7 +51,7 @@ bool SerialController::_readIncomeHeader() {
 void SerialController::_readIncomePacket() {
   if (!_incomePacketSize) return;
   //try to read data from buffer till reach the expected size
-  while (Serial.available() && _receivedBytes <= _incomePacketSize) {
+  while (Serial.available() > 0 && _receivedBytes <= _incomePacketSize) {
     _receivedPayload[_receivedBytes] = Serial.read();
     _receivedBytes++;
   }
@@ -71,12 +71,12 @@ void SerialController::_readIncomePacket() {
 
 
 void SerialController::_sendData() {
-  if (_lastControlsIsValid &&
-      (_lastSentStamp + SERIAL_THREAD_FREQUENCY <= millis() || _lastSentStamp == -1)) { this->_sendLastControls(); }
+  if (_lastControlsIsValid == true &&
+      (millis() - _lastSentStamp > SERIAL_THREAD_FREQUENCY || _lastSentStamp == -1)) { this->_sendLastControls(); }
 }
 void SerialController::_sendLastControls() {
   if (writeControllerPacket((uint8_t*)&_lastControls, sizeof(_lastControls))) {
     _lastControlsIsValid = false;
-    _lastSentStamp = millis();  
+    _lastSentStamp = millis();
   }
 }

@@ -15,7 +15,7 @@ class SerialController
     //Receiive handling
     SerializedVesselControls _lastControls;
     bool _lastControlsIsValid;
-    uint8_t _lastSentStamp;//
+    unsigned long _lastSentStamp;//
     //Income handling
     VesselData _lastData;
     uint8_t _incomePacketSize; //expected size for packet
