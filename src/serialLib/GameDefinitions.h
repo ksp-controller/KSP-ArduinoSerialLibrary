@@ -88,7 +88,7 @@
     };
     enum enumActionGroup : int
     {
-        SAS, RCS, Light, Gear, Brakes, Abort, Stage
+        SAS, RCS, Light, Gear, Breaks, Abort, Stage
     };
     //get the current state of main controls and custom action groups using enumeration above, e.g. ControlStatus(AGBrakes);
     static byte GetControlStatus(VesselData data, byte n)
